@@ -21,6 +21,8 @@ class Vertex(object):
         """add a neighbor along a weighted edge"""
         # TODO check if vertex is already a neighbot
         # TODO if not, add vertex to neighbors and assign weight.
+        if vertex not in self.neighbors:
+            self.neighbors[vertex] = weight
 
     def __str__(self):
         """output the list of neighbors of this vertex"""
@@ -30,6 +32,7 @@ class Vertex(object):
     def getNeighbors(self):
         """return the neighbors of this vertex"""
         # TODO return the neighbors
+        return self.neighbors
 
     def getId(self):
         """return the id of this vertex"""
@@ -38,7 +41,8 @@ class Vertex(object):
     def getEdgeWeight(self, vertex):
         """return the weight of this edge"""
         # TODO return the weight of the edge from this
-        vertext to the given vertex.
+        # vertext to the given vertex.
+
 
 
 """ Graph Class
@@ -59,6 +63,7 @@ class Graph:
         the given key and return the vertex
         """
         # TODO increment the number of vertices
+        
         # TODO create a new vertex
         # TODO add the new vertex to the vertex list
         # TODO return the new vertex
@@ -82,7 +87,8 @@ class Graph:
         return self.vertList.keys()
 
     def __iter__(self):
-        """iterate over the vertex objects in the
+        """
+        iterate over the vertex objects in the
         graph, to use sytax: for v in g
         """
         return iter(self.vertList.values())
