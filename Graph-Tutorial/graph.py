@@ -26,8 +26,7 @@ class Vertex(object):
 
     def __str__(self):
         """output the list of neighbors of this vertex"""
-        return str(self.id) + " adjancent to " +
-        str([x.id for x in self.neighbors])
+        return str(self.id) + " adjancent to " + str([x.id for x in self.neighbors])
 
     def getNeighbors(self):
         """return the neighbors of this vertex"""
@@ -81,18 +80,18 @@ class Graph:
         """add an edge from vertex f to vertex t with a cost
         """
         # if either vertex is not in the graph,
-        if f is not in self.vertList:
+        if f not in self.vertList:
         # add it
-            addVertex(f)
-        if t is not in self.vertList:
-            addVertex(t)
+            self.addVertex(f)
+        if t not in self.vertList:
+            self.addVertex(t)
 
         # if both vertices in the graph, add the
         # edge by making t a neighbor of f
         # and using the addNeighbor method of the Vertex class.
         # Hint: the vertex f is stored in self.vertList[f].
-        f_vert = getVertex(f)
-        t_vert = getVertex(t)
+        f_vert = self.getVertex(f)
+        t_vert = self.getVertex(t)
 
         f_vert.addNeighbor(t_vert, cost)
 
@@ -119,6 +118,73 @@ if __name__ == "__main__":
     g = Graph()
 
     # Add your friends
+    g.addVertex("Ruhsane")
+    g.addVertex("Cherish")
+    g.addVertex("Ryan")
+    g.addVertex("Rinni")
+    g.addVertex("Vincenzo")
+    g.addVertex("Grace")
+    g.addVertex("Tim")
+    g.addVertex("My dad")
+    g.addVertex("My mom")
+    g.addVertex("Ariana Grande")
+
+    # ...  add all 10 including you ...
+
+    # Add connections (non weighted edges for now)
+    g.addEdge("Ruhsane", "Cherish")
+    g.addEdge("Ruhsane", "Ryan")
+    g.addEdge("Ruhsane", "Vincenzo")
+    g.addEdge("Ruhsane", "Rinni")
+    g.addEdge("Ruhsane", "Grace")
+    g.addEdge("Ruhsane", "Tim")
+    g.addEdge("Ruhsane", "My dad")
+    g.addEdge("Ruhsane", "My mom")
+    g.addEdge("Ruhsane", "Ariana Grande")
+
+    g.addEdge("Ryan", "Ruhsane")
+    g.addEdge("Ryan", "Tim")
+    g.addEdge("Ryan", "Vincenzo")
+    g.addEdge("Ryan", "Cherish")
+    g.addEdge("Ryan", "Rinni")
+
+    g.addEdge("Vincenzo", "Ruhsane")
+    g.addEdge("Vincenzo", "Tim")
+    g.addEdge("Vincenzo", "Ryan")
+    g.addEdge("Vincenzo", "Cherish")
+    g.addEdge("Vincenzo", "Rinni")
+
+    g.addEdge("Cherish", "Ruhsane")
+    g.addEdge("Cherish", "Tim")
+    g.addEdge("Cherish", "Ryan")
+    g.addEdge("Cherish", "Vincenzo")
+    g.addEdge("Cherish", "Rinni")
+
+    g.addEdge("Rinni", "Ruhsane")
+    g.addEdge("Rinni", "Tim")
+    g.addEdge("Rinni", "Ryan")
+    g.addEdge("Rinni", "Vincenzo")
+    g.addEdge("Rinni", "Cherish")
+
+    g.addEdge("Rinni", "Ruhsane")
+    g.addEdge("Rinni", "Tim")
+    g.addEdge("Rinni", "Ryan")
+    g.addEdge("Rinni", "Vincenzo")
+    g.addEdge("Rinni", "Cherish")
+
+    g.addEdge("Tim", "Ruhsane")
+    g.addEdge("Tim", "Tim")
+    g.addEdge("Tim", "Ryan")
+    g.addEdge("Tim", "Vincenzo")
+    g.addEdge("Tim", "Rinni")
+
+    g.addEdge("Grace", "Ruhsane")
+
+    g.addEdge("My dad", "Ruhsane")
+    g.addEdge("My dad", "My mom")
+
+    g.addEdge("My mom", "Ruhsane")
+    g.addEdge("My mom", "My dad")
 
 
     # Challenge 1: Output the vertices & edges
