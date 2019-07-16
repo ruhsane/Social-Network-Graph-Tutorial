@@ -41,7 +41,8 @@ class Vertex(object):
         """return the weight of this edge"""
         # TODO return the weight of the edge from this
         # vertext to the given vertex.
-
+        if vertex in self.neighbors:
+            return self.neighbors[vertex]
 
 
 """ Graph Class
@@ -74,17 +75,27 @@ class Graph:
         """return the vertex if it exists"""
         # return the vertex if it is in the graph
         if key in self.vertList:
-            return key
+            return self.vertList[key]
 
     def addEdge(self, f, t, cost=0):
         """add an edge from vertex f to vertex t with a cost
         """
-        # TODO if either vertex is not in the graph,
-        # add it - or return an error (choice is up to you).
-        # TODO if both vertices in the graph, add the
+        # if either vertex is not in the graph,
+        if f is not in self.vertList:
+        # add it
+            addVertex(f)
+        if t is not in self.vertList:
+            addVertex(t)
+
+        # if both vertices in the graph, add the
         # edge by making t a neighbor of f
         # and using the addNeighbor method of the Vertex class.
         # Hint: the vertex f is stored in self.vertList[f].
+        f_vert = getVertex(f)
+        t_vert = getVertex(t)
+
+        f_vert.addNeighbor(t_vert, cost)
+
 
     def getVertices(self):
         """return all the vertices in the graph"""
@@ -108,15 +119,7 @@ if __name__ == "__main__":
     g = Graph()
 
     # Add your friends
-    g.addVertex("Friend 1")
-    g.addVertex("Friend 2")
-    g.addVertex("Friend 3")
 
-    # ...  add all 10 including you ...
-
-    # Add connections (non weighted edges for now)
-    g.addEdge("Friend 1", "Friend 2")
-    g.addEdge("Friend 2", "Friend 3")
 
     # Challenge 1: Output the vertices & edges
     # Print vertices
