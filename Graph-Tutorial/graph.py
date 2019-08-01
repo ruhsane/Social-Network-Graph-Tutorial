@@ -1,9 +1,9 @@
 #!python
+import argparse
 
 """ Vertex Class
 A helper class for the Graph class that defines vertices and vertex neighbors.
 """
-
 
 class Vertex(object):
 
@@ -56,6 +56,8 @@ class Graph:
         """
         self.vertList = {}
         self.numVertices = 0
+        self.numEdges = 0
+        self.directed = False
 
     def add_vertex(self, key):
         """add a new vertex object to the graph with
@@ -94,6 +96,7 @@ class Graph:
         t_vert = self.get_vertex(t)
 
         f_vert.add_neighbor(t_vert, cost)
+        self.numEdges += 1
 
 
     def get_vertices(self):
@@ -139,90 +142,79 @@ class Graph:
 
 # Driver code
 
+def make_graph_from_file(text_file):
+    # Create the graph
+    graph = Graph()
+
+    # Opens and Parses through the text file to set up Graph
+    with open(text_file, "r") as open_file:
+
+        line_counter = 1
+        for line in open_file:
+
+            clean_line = line.strip()
+
+            if line_counter == 1:
+                
+                if clean_line.upper() == 'G':
+                    graph.directed = False
+                elif clean_line.upper() == 'D':
+                    graph.directed = True
+                else:
+                    raise Exception("File must begin with G or D, found %s" % clean_line)
+
+            # if we are at second line
+            if line_counter == 2:
+                # get the vertex keys that are seperated by commas and add them to graph
+                for key in clean_line.split(","):
+                    graph.add_vertex(key)
+
+            elif line_counter > 2:
+                # make an array of the connected edges with the weight, split by comma
+                edge_list = line.strip("()\n").split(',')
+
+                # first item in the list is the 'from' vertex
+                from_v = edge_list[0]
+                # second item in the list is the 'to' vertex
+                to_v = edge_list[1]
+                # third argument is the weight (optional)
+                if len(edge_list) == 3:
+                    weight = edge_list[2]
+                else:
+                    #set weight to 0 if there's no weight specified
+                    weight = 0
+
+                # add edge from 'from' to 'to' with 'weight'
+                graph.add_edge(from_v, to_v, weight)
+                # If it is a Graph and not a Digraph, add another edge in the opposite direction
+                if graph.directed == False:
+                    graph.add_edge(to_v,from_v,weight)
+
+            # add to line counter after reading this line
+            line_counter += 1
+            
+        return graph
+
 
 if __name__ == "__main__":
 
-    # Challenge 1: Create the graph
 
-    g = Graph()
+    parser = argparse.ArgumentParser(description="Create a graph from text files")
+    parser.add_argument("filename", help="The name of the file to read from")
+    args = parser.parse_args()
 
-    # Add your friends
-    g.add_vertex("Ruhsane")
-    g.add_vertex("Cherish")
-    g.add_vertex("Ryan")
-    g.add_vertex("Rinni")
-    g.add_vertex("Vincenzo")
-    g.add_vertex("Grace")
-    g.add_vertex("Tim")
-    g.add_vertex("My dad")
-    g.add_vertex("My mom")
-    g.add_vertex("Ariana Grande")
+    if not args.filename:
+        raise Exception("You didn't provide a file argument!")
 
-    # ...  add all 10 including you ...
-
-    # Add connections (non weighted edges for now)
-    g.add_edge("Ruhsane", "Cherish")
-    g.add_edge("Ruhsane", "Ryan")
-    g.add_edge("Ruhsane", "Vincenzo")
-    g.add_edge("Ruhsane", "Rinni")
-    g.add_edge("Ruhsane", "Grace")
-    g.add_edge("Ruhsane", "Tim")
-    g.add_edge("Ruhsane", "My dad")
-    g.add_edge("Ruhsane", "My mom")
-    g.add_edge("Ruhsane", "Ariana Grande")
-
-    g.add_edge("Ryan", "Ruhsane")
-    g.add_edge("Ryan", "Tim")
-    g.add_edge("Ryan", "Vincenzo")
-    g.add_edge("Ryan", "Cherish")
-    g.add_edge("Ryan", "Rinni")
-
-    g.add_edge("Vincenzo", "Ruhsane")
-    g.add_edge("Vincenzo", "Tim")
-    g.add_edge("Vincenzo", "Ryan")
-    g.add_edge("Vincenzo", "Cherish")
-    g.add_edge("Vincenzo", "Rinni")
-
-    g.add_edge("Cherish", "Ruhsane")
-    g.add_edge("Cherish", "Tim")
-    g.add_edge("Cherish", "Ryan")
-    g.add_edge("Cherish", "Vincenzo")
-    g.add_edge("Cherish", "Rinni")
-
-    g.add_edge("Rinni", "Ruhsane")
-    g.add_edge("Rinni", "Tim")
-    g.add_edge("Rinni", "Ryan")
-    g.add_edge("Rinni", "Vincenzo")
-    g.add_edge("Rinni", "Cherish")
-
-    g.add_edge("Rinni", "Ruhsane")
-    g.add_edge("Rinni", "Tim")
-    g.add_edge("Rinni", "Ryan")
-    g.add_edge("Rinni", "Vincenzo")
-    g.add_edge("Rinni", "Cherish")
-
-    g.add_edge("Tim", "Ruhsane")
-    g.add_edge("Tim", "Tim")
-    g.add_edge("Tim", "Ryan")
-    g.add_edge("Tim", "Vincenzo")
-    g.add_edge("Tim", "Rinni")
-
-    g.add_edge("Grace", "Ruhsane")
-
-    g.add_edge("My dad", "Ruhsane")
-    g.add_edge("My dad", "My mom")
-
-    g.add_edge("My mom", "Ruhsane")
-    g.add_edge("My mom", "My dad")
+    g = make_graph_from_file(args.filename)
 
 
-    # Challenge 1: Output the vertices & edges
+    # Output the vertices & edges
     # Print vertices
-    print("The vertices are: ", g.get_vertices(), "\n")
+    print("# Verticies:", g.numVertices, "\n")
+    print("# Edges:", g.numEdges, "\n")
 
-    print("The edges are: ")
+    print("Edge List:")
     for v in g:
         for w in v.get_neighbors():
-            print("( %s , %s )" % (v.get_id(), w.get_id()))
-
-    print(g.breadth_first_search("Ruhsane", 1))
+            print("( %s , %s , %s )" % (v.get_id(), w.get_id(), v.get_edge_weight(w)))
