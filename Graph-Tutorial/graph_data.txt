@@ -15,7 +15,7 @@ Ruhsane,Rinni,Sarin,Nick,Tumaris,Stutti,Minh,Grace,Kate,Ran,Eric,Kadirya,Rayila,
 (Ruhsane,Ran)
 (Grace,Eric)
 (Ruhsane,Eric)
-(Ran, Eric)
+(Ran,Eric)
 (Ruhsane,Kadirya)
 (Kadirya,Rayila)
 (Ruhsane,Rayila)
