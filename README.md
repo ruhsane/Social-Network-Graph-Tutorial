@@ -1,11 +1,17 @@
 # CS-2.2-Labs
 
-## Your Social Network Graph Tutorial
-The starter code for this tutorial is in the tutorial folder.  
+## Social Network Graph Tutorial
+Every social network platform is an example of graph theory being applied to solve the problem of finding connections – and recommending appropriate ones.
 
-Follow these steps to create your own public repo for the tutorial:
+In this tutorial, I'll build a graph of my nine closest friends and use graph theory to figure out interesting data about them.
 
-1. Clone this repo locally.
-1. On your GitHub, create an _empty_, public repository called Social-Network-Graph-Tutorial, and associate it as a remote for your cloned starter code, and then push to it.
-1. Go to your repo on GitHub and make sure your previously empty repo is now full with starter code! Now when you add/commit/push, it'll be to your repo!
-1. Update the README on your repo to reflect the work you have done.
+### Learning Outcomes
+By the end of this tutorial, I will be able to...
+
+1. Implement a graph in code.
+1. Use a variety of neighbor lookup algorithms for a given graph
+1. Traverse a graph through various search methods
+
+
+### Challenge 1 Social Graph
+<img src= "Images/friends_graph.JPG" width = 500 height = 500> </img>
