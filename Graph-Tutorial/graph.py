@@ -77,6 +77,8 @@ class Graph:
         # return the vertex if it is in the graph
         if key in self.vertList:
             return self.vertList[key]
+        else:
+            raise Exception("vertex id %s is not in the graph" % key)
 
     def add_edge(self, f, t, cost=0):
         """add an edge from vertex f to vertex t with a cost
@@ -111,9 +113,8 @@ class Graph:
         return iter(self.vertList.values())
 
     def breadth_first_search(self, vertex, n):
-        # Run breadth_first_search starting from the input node and going `n` levels deep
-        # Return all nodes found at the `n`th level
-
+        '''Run breadth_first_search starting from the input node and going `n` levels deep
+        Return all nodes found at the `n`th level'''
 
         # Make sure the input node is actually in the graph
         vertex = self.get_vertex(vertex)
@@ -135,9 +136,9 @@ class Graph:
                         curr_level_nodes.append(neighbor)
 
             # update the queue with new level of nodes
-            print([vert.id for vert in queue])
             queue = curr_level_nodes
 
+        # for every vert object in the queue, return each of their id in a list
         return [vert.id for vert in queue]
 
 # Driver code
@@ -218,3 +219,5 @@ if __name__ == "__main__":
     for v in g:
         for w in v.get_neighbors():
             print("( %s , %s , %s )" % (v.get_id(), w.get_id(), v.get_edge_weight(w)))
+
+    print(g.breadth_first_search("Ruhsane",2))
