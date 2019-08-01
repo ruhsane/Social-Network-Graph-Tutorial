@@ -107,6 +107,35 @@ class Graph:
         """
         return iter(self.vertList.values())
 
+    def breadth_first_search(self, vertex, n):
+        # Run breadth_first_search starting from the input node and going `n` levels deep
+        # Return all nodes found at the `n`th level
+
+
+        # Make sure the input node is actually in the graph
+        vertex = self.get_vertex(vertex)
+
+        #initialize queue with the vertex
+        queue = [vertex]
+        seen = set()
+        seen.add(vertex)
+
+        # loop until we get to n'th level
+        for i in range(n):
+
+            curr_level_nodes = []
+
+            for vert in queue:
+                for neighbor in vert.get_neighbors():
+                    if neighbor not in seen:
+                        seen.add(neighbor)
+                        curr_level_nodes.append(neighbor)
+
+            # update the queue with new level of nodes
+            print([vert.id for vert in queue])
+            queue = curr_level_nodes
+
+        return [vert.id for vert in queue]
 
 # Driver code
 
@@ -195,3 +224,5 @@ if __name__ == "__main__":
     for v in g:
         for w in v.get_neighbors():
             print("( %s , %s )" % (v.get_id(), w.get_id()))
+
+    print(g.breadth_first_search("Ruhsane", 1))
