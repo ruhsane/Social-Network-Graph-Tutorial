@@ -1,5 +1,6 @@
 #!python
 import argparse
+import queue
 
 """ Vertex Class
 A helper class for the Graph class that defines vertices and vertex neighbors.
@@ -141,6 +142,46 @@ class Graph:
         # for every vert object in the queue, return each of their id in a list
         return [vert.id for vert in queue]
 
+
+    def find_path(self, from_vert, to_vert):
+        '''
+        Run breadth_first_search starting from the input from_vertex and go until we found to_vertex 
+        Return all nodes on the path
+        '''
+
+        #initializers
+        path_found = False
+        q = queue.Queue()
+        visited = set()
+
+        # get vertex object for from_vert, set parent to None, put in queue, mark as visited
+        curr_vertex = self.get_vertex(from_vert)
+        curr_vertex.parent = None
+        q.put(curr_vertex)
+        visited.add(curr_vertex.id)
+
+        # while q is not empty
+        while q:
+            curr_vertex = q.get()
+            if curr_vertex.id == to_vert:
+                path_found = True
+                break 
+
+            for neighbor in curr_vertex.neighbors: 
+                if neighbor.id not in visited:
+                    q.put(neighbor)
+                    visited.add(neighbor.id)
+                    neighbor.parent = curr_vertex
+
+        # Once ending vertex is found, traverse from bottom to up according to its parent
+        if path_found:
+            path = []
+            while curr_vertex:
+                path.append(curr_vertex.id)
+                curr_vertex = curr_vertex.parent
+            return path[::-1] # Reverse the list because we are traversing backwards
+
+            
 # Driver code
 
 def make_graph_from_file(text_file):
@@ -221,3 +262,4 @@ if __name__ == "__main__":
             print("( %s , %s , %s )" % (v.get_id(), w.get_id(), v.get_edge_weight(w)))
 
     print(g.breadth_first_search("Ruhsane",2))
+    print(g.find_path("Ruhsane","Alxah"))
