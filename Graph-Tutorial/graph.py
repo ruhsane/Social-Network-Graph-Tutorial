@@ -144,6 +144,10 @@ class Graph:
 
 
     def find_path(self, from_vert, to_vert):
+        return self.find_shortest_path(from_vert, to_vert)
+
+
+    def find_shortest_path(self, from_vert, to_vert):
         '''
         Run breadth_first_search starting from the input from_vertex and go until we found to_vertex 
         Return all nodes on the path
@@ -181,7 +185,6 @@ class Graph:
                 curr_vertex = curr_vertex.parent
             return path[::-1] # Reverse the list because we are traversing backwards
 
-            
 # Driver code
 
 def make_graph_from_file(text_file):
