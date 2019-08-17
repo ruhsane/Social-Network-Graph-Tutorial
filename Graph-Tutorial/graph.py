@@ -185,6 +185,24 @@ class Graph:
                 curr_vertex = curr_vertex.parent
             return path[::-1] # Reverse the list because we are traversing backwards
 
+
+    def clique(self):
+        '''
+        credit: Ryan Nguyen
+        '''
+
+        
+        clique_result = set()
+        start_vertex = list(self.vertList.keys())[0]
+        clique_result.add(start_vertex)
+
+        for vertex in self.vertList:
+            if vertex not in clique_result:
+                if vertex in self.vertList[vertex].neighbors:
+                    clique_result.add(vertex)
+        return clique_result
+
+
 # Driver code
 
 def make_graph_from_file(text_file):
